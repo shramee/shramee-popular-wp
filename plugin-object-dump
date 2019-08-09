@@ -1,0 +1,45 @@
+stdClass Object
+(
+    [name] => Limit Login Attempts
+    [slug] => limit-login-attempts
+    [version] => 1.7.1
+    [author] => Johan Eenfeldt
+    [author_profile] => https://profiles.wordpress.org/automattic
+    [requires] => 2.8
+    [tested] => 3.3.2
+    [requires_php] =>
+    [rating] => 92
+    [ratings] => stdClass Object
+        (
+            [5] => 165
+            [4] => 11
+            [3] => 3
+            [2] => 4
+            [1] => 12
+        )
+
+    [num_ratings] => 195
+    [support_threads] => 1
+    [support_threads_resolved] => 1
+    [active_installs] => 1000000
+    [downloaded] => 1661744
+    [last_updated] => 2012-06-01 5:26pm GMT
+    [added] => 2009-01-15
+    [homepage] => http://devel.kostdoktorn.se/limit-login-attempts
+    [description] => Plugin description here
+    [short_description] => Limit rate of login attempts, including by way of cookies, for each IP. Fully customizable.
+    [download_link] => https://downloads.wordpress.org/plugin/limit-login-attempts.1.7.1.zip
+    [tags] => stdClass Object
+        (
+            [authentication] => authentication
+            [login] => login
+            [security] => security
+        )
+
+    [donate_link] =>
+    [icons] => stdClass Object
+        (
+            [default] => https://s.w.org/plugins/geopattern-icon/limit-login-attempts.svg
+        )
+
+)

@@ -58,8 +58,8 @@ class Caxton_Boilerplate {
 	 */
 	public function editor_enqueue() {
 		$url = plugin_dir_url( __FILE__ );
-		wp_enqueue_style( "caxton-boilerplate-front", "$url/assets/styles.css" );
-		wp_enqueue_script( "caxton-boilerplate-admin", "$url/assets/blocks.js", array( 'caxton' ) );
+		wp_enqueue_style( "sm-popular-wp-front", "$url/assets/styles.css" );
+		wp_enqueue_script( "sm-popular-wp-admin", "$url/assets/blocks.min.js", array( 'caxton' ) );
 	}
 
 	/**
@@ -68,7 +68,7 @@ class Caxton_Boilerplate {
 	 */
 	public function enqueue() {
 		$url = plugin_dir_url( __FILE__ );
-		wp_enqueue_style( "caxton-boilerplate-front", "$url/assets/styles.css" );
+		wp_enqueue_style( "sm-popular-wp-front", "$url/assets/styles.css" );
 	}
 
 	/**
@@ -80,13 +80,13 @@ class Caxton_Boilerplate {
 			'<div class="notice is-dismissible error">' .
 
 			'<p>' . sprintf(
-				__( '%s requires that you have our free plugin %s installed and activated.', 'caxton-boilerplate' ),
+				__( '%s requires that you have our free plugin %s installed and activated.', 'sm-popular-wp' ),
 				'<b>Gutenberg blocks in 25 minutes</b>',
 				'<a href="' . admin_url( 'plugin-install.php?s=caxton&tab=search&type=term' ) . '">Caxton</a>'
 			) . '</p>' .
 
 			'<p><a  href="' . admin_url( 'plugin-install.php?s=caxton&tab=search&type=term' ) . '" class="button-primary">' .
-			__( 'Install Caxton', 'caxton-boilerplate' ) . '</a></p>' .
+			__( 'Install Caxton', 'sm-popular-wp' ) . '</a></p>' .
 
 			'</div>';
 	}

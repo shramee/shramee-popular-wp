@@ -1,6 +1,6 @@
 CaxtonBlock( {
-	id      : 'caxton-boilerplate/demo',
-	title   : 'Caxton boilerplate',
+	id      : 'sm-popular-wp/plugins',
+	title   : 'Popular plugins',
 	icon    : 'star-filled',
 	category: 'layout',
 	apiUrl  : function ( props ) {
@@ -8,7 +8,7 @@ CaxtonBlock( {
 		var
 			attr = props.attributes;
 		return {
-			blockHTML: '/caxton-boilerplate/v1/demo?color=' + attr['color'],
+			blockHTML: '/sm-popular-wp/v1/plugins?color=' + attr['color'],
 		};
 	},
 	fields  : {
@@ -22,7 +22,6 @@ CaxtonBlock( {
 		if ( props.blockHTML && props.blockHTML.data ) {
 
 			return Caxton.html2el( props.blockHTML.data, {
-				className: 'woocommerce',
 				key      : 'block-html',
 				style    : {},
 				onClick  : function ( e ) {
@@ -33,7 +32,7 @@ CaxtonBlock( {
 			return wp.element.createElement( 'div', {
 				className: 'caxton-notification',
 				key      : 'notice'
-			}, 'Loading demo block...' );
+			}, 'Loading popular plugins block...' );
 		}
 	}
 } );

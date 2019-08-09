@@ -1,0 +1,31 @@
+.shramee-plugin {
+	border-color: #eee;
+}
+
+.shramee-plugin-rating {
+	width: 100px;
+	height: 100px;
+	padding: 20px;;
+	position: relative;
+	display:flex;
+	line-height: 1;
+	justify-content: center;
+	flex-direction: column;
+	font-size: 1rem;
+	text-align: center;
+}
+
+.shramee-plugin-rating svg {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.shramee-plugin-rating .plugin-rating-count {
+	font-size: 1em;
+}
+
+.shramee-plugin-rating .plugin-rating-percentage {
+	font-size: 1.4em;
+	margin-bottom: .25em;
+}
