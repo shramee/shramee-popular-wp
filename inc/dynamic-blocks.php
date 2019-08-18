@@ -44,51 +44,104 @@ class Caxton_Boilerplate_Dynamic_Blocks {
 		return $this->render_plugins( $args );
 	}
 
+	public function popular_plugins_today( $limit = 50 ) {
+		$date = date( 'Y-m-d', strtotime( '1 day ago' ) );
+
+		$return_plugins = get_option( "popular_plugins_$date" );
+
+		if ( ! $return_plugins ) {
+
+			$all_plugins = $this->popular_plugins_all_time( $limit * 2 );
+			$plugin_dls = [];
+
+			foreach ( $all_plugins as $slug => $plugin ) {
+				$downlaods = json_decode( wp_remote_retrieve_body(
+					wp_remote_request( "http://api.wordpress.org/stats/plugin/1.0/downloads.php?slug=$slug&limit=2" )
+				), 'array' );
+				if ( ! empty( $downlaods[ $date ] ) ) {
+					$plugin_dls[ $slug ] = $downlaods[ $date ];
+				}
+			}
+
+			arsort( $plugin_dls );
+			$top_downloads = array_slice( $plugin_dls, 0, 50 );
+
+			$return_plugins = [];
+			foreach ( $top_downloads as $slug => $dls ) {
+				$return_plugins[ $slug ] = $all_plugins[ $slug ];
+				$return_plugins[ $slug ]['downloads_today'] = $dls;
+			}
+
+			update_option( "popular_plugins_$date", $return_plugins );
+		}
+
+		return $return_plugins;
+	}
+
+	public function popular_plugins_all_time( $top = 120, $force = false ) {
+		$plugins = get_option( "shramee_popular_plugins-$top" );
+
+		if ( ! $plugins || $force ) {
+			$resp = wp_remote_retrieve_body(
+				wp_remote_request( "https://api.wordpress.org/plugins/info/1.2/?action=query_plugins&request[per_page]=$top" )
+			);
+
+			if ( $resp ) {
+				$response = json_decode( $resp, 'array' );
+				$plugins = [];
+
+				foreach ( $response['plugins'] as $plugin ) {
+					$plugins[ $plugin['slug'] ] = $plugin;
+				}
+				update_option( "shramee_popular_plugins-$top", $plugins, 'no' );
+			}
+		}
+
+		return $plugins;
+	}
+
 	public function render_plugins( $args ) {
 
-		$resp = wp_remote_request( 'https://api.wordpress.org/plugins/info/1.2/?action=query_plugins&browse=popular' );
+		$plugins = $this->popular_plugins_today();
 
 		ob_start();
 
-		if ( is_wp_error( $resp ) ) {
-			echo
-				'<b>Error Occurred: ' . $resp->get_error_code() . '</b>' .
-				$resp->get_error_message();
-		} else {
-			$response = json_decode( $resp['body'] );
+		$layout_classes = 'flex flex-wrap flex-nowrap-ns items-center mv3 pa2 ba';
 
-			if ( $response->plugins ) {
+		foreach ( $plugins as $plugin ) {
+			$icon = (array) $plugin['icons'];
 
-				$layout_classes = 'flex items-center mv3 pa2 ba';
+			$icon = array_shift( $icon );
+			?>
+			<div class="shramee-plugin shramee-plugin-<?php echo $plugin['slug'] ?> <?php echo $layout_classes ?>">
 
-				foreach ( $response->plugins as $plugin ) {
-					$icon = (array) $plugin->icons;
-
-					$icon = array_shift( $icon );
-					?>
-					<div class="shramee-plugin shramee-plugin-<?php echo $plugin->slug ?> <?php echo $layout_classes ?>">
-						<img width="128" height="128" src="<?php echo $icon ?>">
-						<div class="shramee-plugin-meta mh2">
-							<h4>
-								<a href="https://wordpress.org/plugins/<?php echo $plugin->slug ?>">
-									<?php echo $plugin->name ?>
-								</a>
-							</h4>
-							<p><?php echo $plugin->short_description ?></p>
-						</div>
-						<div class="shramee-plugin-stats ml-auto">
-							<div class="shramee-plugin-rating">
-								<?php echo $this->percentage_to_circle( $plugin->rating ) ?>
-								<div class="plugin-rating-percentage">
-									<?php echo $plugin->rating ?>%
-								</div>
-								<?php //echo $plugin->num_ratings ?>
-							</div>
-						</div>
+				<div class="shramee-plugin-content flex-ns items-center justify-center">
+					<img width="128" height="128" src="<?php echo $icon ?>" class="fl fn-ns mr3">
+					<div class="shramee-plugin-meta">
+						<h4 class="cn">
+							<a href="https://wordpress.org/plugins/<?php echo $plugin['slug'] ?>">
+								<?php echo $plugin['name'] ?>
+							</a>
+						</h4>
+						<p><?php echo $plugin['short_description'] ?></p>
 					</div>
-					<?php
-				}
-			}
+				</div>
+				<div class="shramee-plugin-stats ml-auto flex items-center flex-row flex-column-m justify-center w-100 w-auto-ns">
+					<div class="shramee-plugin-downloads ma3">
+						<?php echo $plugin['downloads_today'] ?>
+						<small>Downloads</small>
+					</div>
+					<div class="shramee-plugin-rating">
+						<?php echo $this->percentage_to_circle( $plugin['rating'] ) ?>
+						<div class="plugin-rating-percentage">
+							<small>Rating</small>
+							<?php echo $plugin['rating'] ?>%
+						</div>
+						<?php //echo $plugin['num_ratings'] ?>
+					</div>
+				</div>
+			</div>
+			<?php
 		}
 
 		return ob_get_clean();

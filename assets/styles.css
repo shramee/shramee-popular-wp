@@ -15,6 +15,12 @@
 	text-align: center;
 }
 
+.shramee-plugin small {
+	display: block;
+	font-size: .88rem;
+	line-height: 1;
+}
+
 .shramee-plugin-rating svg {
 	position: absolute;
 	top: 0;
@@ -28,4 +34,9 @@
 .shramee-plugin-rating .plugin-rating-percentage {
 	font-size: 1.4em;
 	margin-bottom: .25em;
+}
+
+.shramee-plugin-downloads {
+	font-size: 1.6em;
+	text-align:  center;
 }
