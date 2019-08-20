@@ -8,14 +8,18 @@ CaxtonBlock( {
 		var
 			attr = props.attributes;
 		return {
-			blockHTML: '/sm-popular-wp/v1/plugins?color=' + attr['color'],
+			blockHTML: '/sm-popular-wp/v1/plugins?display=' + attr.display,
 		};
 	},
 	fields  : {
-		'color': {
-			label  : 'Text color',
-			type   : 'color',
-			default: '#e91d63',
+		'display': {
+			label  : 'Top 50 plugins by',
+			type   : 'select',
+			options: [
+				{ value: 'downloads_per_day', label: 'Downloads per day', },
+				{ value: 'active_installs', label: 'Active installs', }
+			],
+			default: 'downloads_per_day',
 		},
 	},
 	apiCallback: function ( props, that ) {

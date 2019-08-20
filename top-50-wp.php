@@ -1,6 +1,6 @@
 <?php
 /*
- * Plugin Name: Caxton block boilerplate
+ * Plugin Name: Top 50 WP
  * Plugin URI: http://shramee.me/
  * Description: Roll out quick blocks for Gutenberg with Caxton
  * Author: Shramee
@@ -9,11 +9,11 @@
  */
 
 /**
- * Class Caxton_Boilerplate
+ * Class Top_50_WP
  * Enqueues scripts and styles for blocks.
  * Displays a notice to admin if Caxton is not installed.
  */
-class Caxton_Boilerplate {
+class Top_50_WP {
 
 	/** @var self Instance */
 	private static $_instance;
@@ -31,7 +31,7 @@ class Caxton_Boilerplate {
 	}
 
 	/**
-	 * Caxton_Boilerplate constructor.
+	 * Top_50_WP constructor.
 	 */
 	protected function __construct() {
 		add_action( 'init', [ $this, 'init' ] );
@@ -93,4 +93,4 @@ class Caxton_Boilerplate {
 }
 
 require_once 'inc/dynamic-blocks.php';
-Caxton_Boilerplate::instance();
+Top_50_WP::instance();
