@@ -1,11 +1,11 @@
 <?php
 /*
  * Plugin Name: Top 50 WP
- * Plugin URI: http://shramee.me/
- * Description: Roll out quick blocks for Gutenberg with Caxton
- * Author: Shramee
+ * Plugin URI: https://pootlepress.com/
+ * Description: Displays top 50 WordPress plugins based on downloads/active installs.
+ * Author: PootlePress
  * Version: 1.0.0
- * Author URI: http://shramee.me/
+ * Author URI: https://pootlepress.com/
  */
 
 /**
@@ -35,6 +35,35 @@ class Top_50_WP {
 	 */
 	protected function __construct() {
 		add_action( 'init', [ $this, 'init' ] );
+		$this->fs_init();
+		do_action( 'top50wp_fs_loaded' );
+	}
+
+	public function fs_init() {
+		global $top50wp_fs;
+
+		if ( ! isset( $top50wp_fs ) ) {
+			// Include Freemius SDK.
+			require_once dirname(__FILE__) . '/fs-sdk/start.php';
+
+			$top50wp_fs = fs_dynamic_init( array(
+				'id'                  => '4434',
+				'slug'                => 'top50wp',
+				'type'                => 'plugin',
+				'public_key'          => 'pk_0bfeb48dbc20bfd1394ecac6dda01',
+				'is_premium'          => false,
+				'has_addons'          => false,
+				'has_paid_plans'      => false,
+				'menu'                => array(
+					'first-path'     => 'plugins.php',
+					'account'        => false,
+					'contact'        => false,
+					'support'        => false,
+				),
+			) );
+		}
+
+		return $top50wp_fs;
 	}
 
 	/**
