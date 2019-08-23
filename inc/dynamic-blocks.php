@@ -60,7 +60,7 @@ class Top_50_WP_Dynamic_Blocks {
 		$display_options = [
 			'downloads_per_day' => [
 				'label'   => 'Downloads yesterday',
-				'field'   => 'downloads_today',
+				'field'   => 'downloads_per_day',
 				'data_cb' => 'qry_by_downloads_per_day'
 			],
 			'active_installs'   => [
@@ -129,7 +129,7 @@ class Top_50_WP_Dynamic_Blocks {
 
 			<div class="shramee-plugins-footer flex flex-wrap justify-center">
 				<div class="shramee-plugin-credits mr-auto w-100 w-auto-ns tc mv2">
-					Powered by <b>PootlePress</b>
+					Powered by <a href="https://pootlepress.com/">PootlePress</a>
 				</div>
 				<?php
 				$page_url      = get_the_permalink();
